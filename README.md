@@ -20,3 +20,13 @@ Then run `node dist/index.js --new --user <username here>` and you will be promp
 ## Database
 
 Data gets stored into the local database file dd.db. This file will not by synched to git repos. Delete this file if you don't set up a user properly on the first go
+
+## Mitigation 
+
+A usage log is currently updated on the use of verbs 'read', 'new', or 'send'. This log includes the user that invoked the verb, the verb itself, and the time/date 
+that it was invoked. 
+
+## TODO
+
+Expand logging system to include more usage information.
+Implement another mitigation system.
