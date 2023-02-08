@@ -1,9 +1,12 @@
 import readline from "readline";
-
+import log from "./log";
 import { noUsers, setUserPassHash, userExists } from "./db";
 import { authenticate, getPassword } from "./session";
 
+
+
 export const newUser = async (user: string) => {
+    log("new", user);
     try {
         if (!noUsers() && !userExists(user)) {
             throw new Error("User not recognized");

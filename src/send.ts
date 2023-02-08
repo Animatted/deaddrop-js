@@ -1,7 +1,9 @@
 import readline from "readline";
 import { saveMessage, userExists } from "./db";
+import log from "./log";
 
 export const sendMessage = async (user: string) => {
+    log("send", user);
     try {
         if (!await userExists(user)) {
             throw new Error("Destination user does not exist");

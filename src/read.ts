@@ -1,7 +1,9 @@
+import log from "./log";
 import { getMessagesForUser, userExists } from "./db";
 import { authenticate } from "./session";
 
 export async function readMessages(user: string) {
+    log("read", user);
     try {
         if (!await userExists(user)) {
             throw new Error("User does not exist");
