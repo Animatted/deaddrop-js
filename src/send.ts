@@ -1,21 +1,25 @@
 import readline from "readline";
-import { saveMessage, userExists } from "./db";
+import { saveMessage } from "./db";
+import { userExists } from "./db/user"
 import log from "./log";
 
 export const sendMessage = async (user: string) => {
-    log("send", user);
+    
     try {
         if (!await userExists(user)) {
+            log("send", user, "Invalid User");
             throw new Error("Destination user does not exist");
         }
 
         getUserMessage().then(async (message) => {
+            log("send", user, "Message created: " + message);
             await saveMessage(message, user);
         });
 
 
     } catch (error) {
-        console.error("Error occured creating a new user.", error);
+        log("send", user, "Error");
+        console.error("Error occured during send operation.", error);
     }
 }
 

@@ -1,15 +1,22 @@
 import { connect } from "./db"
+import log from "../log"
 
 export const userExists = async (user: string): Promise<boolean> => {
     let db = await connect();
+    try
+    {
+        let query = "SELECT id FROM Users WHERE user = :user;"
+        const result = await db.get(query, {':user': user,});
+        return typeof result.id === "number";
+    }
+    catch(error)
+    {
+        log("send", user, "Invalid Destination User");
+        throw new Error("Destination user does not exist");
+    }
 
-    let query = "SELECT id FROM Users WHERE user = :user;"
-    const result = await db.get(query, {
-        ':user': user,
-    });
-
-    return typeof result.id === "number";
 }
+
 
 export const getUserId = async (user: string): Promise<number> => {
     let db = await connect();
