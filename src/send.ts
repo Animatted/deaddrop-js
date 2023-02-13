@@ -12,7 +12,7 @@ export const sendMessage = async (user: string) => {
         }
 
         getUserMessage().then(async (message) => {
-            log("send", user, "Message created: " + message);
+            log("send", user, "Message created");
             await saveMessage(message, user);
         });
 

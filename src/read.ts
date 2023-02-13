@@ -15,8 +15,8 @@ export async function readMessages(user: string) {
             throw new Error("Unable to authenticate");
         }
 
+        log("read", user);
         getMessagesForUser(user).then((messages) => {
-            log("read", user);
             messages.forEach((e: string) => console.log(e, "\n"));
         });
 
