@@ -27,6 +27,10 @@ A usage log is currently updated on the use of verbs 'read', 'new', or 'send'. T
 interaction, and a short note giving context to the interaction. (Errors thrown, users created, thingsof that nature) All of this information is saved to a file called
 log.txt.
 
+******************************************************************************************************************************************************************************
+AS OF 12:04 AM 2/13/2023
+Turns out the system talked about below doesn't quite work as expected. It's currently printing out undefined values instead of messages when read is invoked. Testing is hard.
+******************************************************************************************************************************************************************************
 Additionally, there is a system in place that audits the integrity of each message within the system. Upon sending a message, a hash is generated and stored in the database. When 
 messages are fetched from the database, they are then each run through the hashing algorithm and checked against the hashes stored in the database. The current implementation of this 
 system isn't perfect, and still leaves the hashes open to tampering. I did attempt to mitigate this concern by encrypting the hashes using a symmetric encryption algorithm such as 
