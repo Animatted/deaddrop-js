@@ -26,7 +26,6 @@ export const authenticate = async (user: string): Promise<boolean> => {
 };
 
 
-
 // from the impressive @sdgfsdh at https://stackoverflow.com/questions/24037545/how-to-hide-password-in-the-nodejs-console
 // get a password from the cli replacing input with **** to hide it
 const readPassIn = (query: string): Promise<string> => {
