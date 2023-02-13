@@ -7,7 +7,7 @@ export const getPassword = async (): Promise<string> => {
         .then((pass) => saltAndHash(pass));
 };
 
-const saltAndHash = (pass: string): string => {
+export const saltAndHash = (pass: string): string => {
     // 10 is the recommended default difficulty for bcrypt as of jan 2023
     const salt = bcrypt.genSaltSync(10);
     return bcrypt.hashSync(pass, salt);
@@ -24,6 +24,8 @@ export const authenticate = async (user: string): Promise<boolean> => {
 
     return bcrypt.compare(pass.toString(), hash.toString());
 };
+
+
 
 // from the impressive @sdgfsdh at https://stackoverflow.com/questions/24037545/how-to-hide-password-in-the-nodejs-console
 // get a password from the cli replacing input with **** to hide it
