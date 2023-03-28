@@ -1,9 +1,12 @@
 import { connect } from "./db"
-import { saltAndHash } from "../session"
+import { hash } from "../session"
 import log from "../log"
+//import sha256 from 'crypto-js/sha256'
 
 export const getMessagesForUser = async (user: string): Promise<string[]> => {
     let db = await connect();
+    
+    //hash thing here
 
     let messages: string[] = [];
     let hashes: string[] = [];
@@ -33,10 +36,25 @@ export const getMessagesForUser = async (user: string): Promise<string[]> => {
         if (err) {
             throw new Error(err);
         }
-        hashes.push(row.data);
+        hashes.push(row.hash);
     });
 
-    if(hashes == messages.map(message => saltAndHash(message)))
+    for(var i = 0; i < messages.length; i++)
+    {
+        if(hashes[i] !== hash(messages[i]))
+        {
+            console.log(hashes[i]);
+            console.log(hash(messages[i]))
+            log("read", user, "Message and hash do not match");
+            return hashes;
+        }
+    }
+
+    return messages;
+
+/*
+
+    if(hashes == messages.map(message => hash(message)))
     {
         return messages;
     }
@@ -46,12 +64,14 @@ export const getMessagesForUser = async (user: string): Promise<string[]> => {
         return hashes;
     }
  
+
+    */
 }
 
 
 export const saveMessage = async (message: string, recipient: string) => {
     let db = await connect();
-    let messageHash = saltAndHash(message);
+    let messageHash = hash(message);
     await db.run(`
         INSERT INTO Messages 
             (recipient, data, hash)

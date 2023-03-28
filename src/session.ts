@@ -2,6 +2,8 @@ import readline from "readline";
 import bcrypt from "bcryptjs";
 import { getUserPassHash, noUsers } from "./db";
 
+const {createHash} = require('crypto');
+
 export const getPassword = async (): Promise<string> => {
     return readPassIn("Password: ")
         .then((pass) => saltAndHash(pass));
@@ -54,4 +56,8 @@ const readPassIn = (query: string): Promise<string> => {
             resolve(value);
         });
     });
+}
+
+export const hash = (message: string) :string =>{
+    return createHash('sha256').update(message).digest('hex');
 }
