@@ -30,4 +30,6 @@ log.txt.
 *************************************************************************************************************************************************************************
 MAC incoming. [Originally due: 3/26/23 Submission date: [TBD]
 *************************************************************************************************************************************************************************
+MAC working in it's most basic form. Currently generating and comparing a sha256 hash for each message saved within database. More to come.
+
 Brain not working for code things. I'm trying, but it's slow.
