@@ -32,8 +32,10 @@ MAC incoming. [Originally due: 3/26/23 Submission date: [TBD]
 *************************************************************************************************************************************************************************
 3/28/23
 MAC working in it's most basic form. Currently generating and comparing a sha256 hash for each message saved within database. More to come.
+
 3/29/23
 Getting sender into database and trying to figure out read only entries. Sleep is needed.
+
 [Edit]
 Tried to test one more change and suddenly the compiler is very mad about things it shouldn't be. Starting again from fresh clone tomorrow maybe if submission is still an option. Grumble grumble.
 
