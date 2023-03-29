@@ -30,6 +30,9 @@ log.txt.
 *************************************************************************************************************************************************************************
 MAC incoming. [Originally due: 3/26/23 Submission date: [TBD]
 *************************************************************************************************************************************************************************
+3/28/23
 MAC working in it's most basic form. Currently generating and comparing a sha256 hash for each message saved within database. More to come.
+3/29/23
+Getting sender into database and trying to figure out read only entries. Sleep is needed.
 
-Brain not working for code things. I'm trying, but it's slow.
+
