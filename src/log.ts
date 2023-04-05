@@ -1,4 +1,4 @@
-import fs from "fs";
+ import fs from "fs";
 
 export default function log(verb : string, user : string, notes : string = "NA")
 {

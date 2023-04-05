@@ -7,7 +7,7 @@ export const getMessagesForUser = async (user: string): Promise<string[]> => {
     let db = await connect();
     
     //hash thing here
-
+    let senders: string[] = [];
     let messages: string[] = [];
     let hashes: string[] = [];
 
@@ -23,6 +23,20 @@ export const getMessagesForUser = async (user: string): Promise<string[]> => {
             throw new Error(err);
         }
         messages.push(row.data);
+    });
+
+    await db.each(`
+        SELECT sender FROM Messages
+        WHERE recipient = (
+            SELECT id FROM Users WHERE user = :user
+        );
+    `, {
+        ":user": user,
+    }, (err, row) => {
+        if (err) {
+            throw new Error(err);
+        }
+        senders.push(row.sender);
     });
 
     await db.each(`
@@ -50,38 +64,32 @@ export const getMessagesForUser = async (user: string): Promise<string[]> => {
         }
     }
 
+    for(var i = 0; i < messages.length; i++)
+    {
+        messages[i] = senders[i] + ": " + messages[i];
+    }
+
     return messages;
 
-/*
 
-    if(hashes == messages.map(message => hash(message)))
-    {
-        return messages;
-    }
-    else
-    {
-        log("read", user, "Message and hash do not match");
-        return hashes;
-    }
- 
-
-    */
 }
 
 
-export const saveMessage = async (message: string, recipient: string) => {
+export const saveMessage = async (message: string, recipient: string, sender: string) => {
     let db = await connect();
     let messageHash = hash(message);
     await db.run(`
         INSERT INTO Messages 
-            (recipient, data, hash)
+            (recipient, sender, data, hash)
         VALUES (
-            (SELECT id FROM Users WHERE user = :user),
+            (SELECT id FROM Users WHERE user = :recipient),
+            :sender,
             :message,
             :hash
         )
     `, {
-        ":user": recipient,
+        ":recipient": recipient,
+        ":sender": sender,
         ":message": message,
         ":hash": messageHash
     });
