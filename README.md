@@ -28,7 +28,7 @@ interaction, and a short note giving context to the interaction. (Errors thrown,
 log.txt.
 
 *************************************************************************************************************************************************************************
-MAC incoming. [Originally due: 3/26/23 Submission date: [TBD]
+MAC incoming. [Originally due: 3/26/23 Submission date: [4/5/23]
 *************************************************************************************************************************************************************************
 3/28/23
 MAC working in it's most basic form. Currently generating and comparing a sha256 hash for each message saved within database. More to come.
@@ -39,3 +39,18 @@ Getting sender into database and trying to figure out read only entries. Sleep i
 4/4/23
 Finally got sender into database and displaying when read is invoked. Just need to make MAC's unable to be modified.
 
+4/6/23
+I just can't figure out making MAC's unmodifiable. Encryption hits the whole database, columns can't be set to read only, schema would only prevent modification within
+software which isn't possible as it stands anyway. Maybe a new table for MAC's could have been encrypted, but I lack the database experience to make that happen with 
+the negative time I have. May still be some test code in there, but gotta move on from this one. 
+
+*************************************************************************************************************************************************************************
+Changes Discussion
+*************************************************************************************************************************************************************************
+
+MAC Implementation
+On creating a new message, a SHA-256 has is generated and saved to the database as well as the sender of the message. The is checked against a freshly generated hash at the
+time of read to ensure that a message has not been modified. Additionally, at read time, a user is asked to authenticate before the check to see if a user exists. This order
+is important as it could allow for an outside entity to discern users in the database if the check happened before authentication. Sender information is concatenated with 
+message data right before the message is printed, after the MAC check. 
+I could not get the MACs implemented in a way that they themselves were unable to be modified.  
